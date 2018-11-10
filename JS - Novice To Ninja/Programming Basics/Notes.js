@@ -233,11 +233,3 @@ NaN === NaN;                //false
 NaN == NaN;                 //false
 16 != "16"                  //false
 18 >= "18"                  //true
-
-
-
-
-
-
-
-
