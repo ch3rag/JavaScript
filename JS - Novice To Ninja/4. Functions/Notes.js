@@ -205,7 +205,7 @@ evenAr.some(x => x % 2 !== 0);                              //False
 
 const myArray = [1, 2, 3, 4, 5];
 
-myArray.map(x => x * x).reduce((acc, value) => acc + value);    //5
+myArray.map(x => x * x).reduce((acc, value) => acc + value);    //55
 
 
 
