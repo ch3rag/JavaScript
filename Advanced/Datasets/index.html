@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Custom Datasets In HTML</title>
+    </head> 
+    <body>
+        <div id="myDiv" data-name="Chirag" data-age="20" data-started-coding-at="18">
+            Sample Text
+        </div>
+        <script>
+            const myDiv = document.querySelector("#myDiv");
+            myDiv.dataset.name = "Bharat";
+            console.log(myDiv.dataset);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Creating Custom Events</title>
+    </head>
+    <body>
+        <h2 id="number">0</h2>
+        <h3 id="number2">-1</h3>
+
+        <script>
+            const number = document.querySelector("#number");
+            
+            function changeNumber(n, c) {
+                const event = new CustomEvent("numberChanged", {
+                    detail: {
+                        number: n,
+                        textColor: c
+                    }
+                });
+
+                number.dispatchEvent(event);
+            }
+            
+            number.addEventListener("numberChanged", function(e) {
+                number.textContent = e.detail.number;
+                number.style.color = e.detail.textColor;
+            });
+        </script>
+    </body>
+</html>

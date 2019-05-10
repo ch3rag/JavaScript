@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Intersection Observer Demo</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .spacer {
+            height: 200vh;
+        }
+
+        .box {
+            height: 100px;
+            width: 100px;
+            box-shadow: 0px 0px 5px black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            color: white;
+            background-color: #00adfa;
+            font-size: larger;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;    
+        }
+
+        #trigger {
+            position: fixed;
+            top: 50%;
+            color: blue;
+            width: 100%;
+        }
+
+        .bg-red {
+            background-color: red;
+            transition: 0.5s;
+            transition-property: background-color;   
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="trigger">trigger________________________________________________________________</div>
+    <div class="spacer"></div>
+    <div class="box">Test</div>
+    <div class="spacer"></div>
+    <script>
+        const box = document.querySelectorAll(".box")[0];
+        
+        const options = {
+            root: null,
+            rootMargin: "-50%",
+            threshold: 0
+        }
+
+        const observer = new IntersectionObserver(doSomething, options);
+        setTimeout(() => observer.observe(box), 100);
+
+        function doSomething(entries, observer) {
+            entries.forEach(function(entry) {
+                    console.log(entry);
+                    entry.target.classList.toggle("bg-red");
+            });
+        }   
+
+    </script>
+</body>
+
+</html>
