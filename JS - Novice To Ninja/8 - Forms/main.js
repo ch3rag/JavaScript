@@ -1,42 +1,44 @@
-// REFERENCING THE FORM
-let form;
-form = document.forms[0];             // FIRST FORM
-form = document.getElementsByTagName("form")[0];
-form = document.forms.search;         // CAUTION
-form = document.forms["search"];        
+const form = document.forms.hero;
+form.addEventListener("submit", makeHero);
+form.heroName.focus();
 
-// ELEMENTS INSIDE THE FORM
-console.log(form.elements);
-let [input, button] = form.elements;            //OR
-input = form["searchinput"];                    //OR
-input = form.searchinput;
+const label = form.querySelector("label");
+const error = document.createElement("div");
+error.classList.add("error");
+error.textContent = "! Your name is not allowed to start with X";
+label.append(error);
 
-// form.submit();          // SUBMIT FORM AUTOMATICALLY(DOESN'T TRIGGER SUBMIT EVENT)
-// form.reset();           // RESET FORM AUTOMATICALLY
-form.action = "url";    // SET ACTION URL FOR PROCESSING FORM 
 
-// FOCUS ON A INPUT ELEMENT
-input.addEventListener("focus", () => { 
-    console.log("Focused")
-    if(input.value === "Type...") input.value = "";
+function validateInLine() {
+    const heroName =  this.value.toUpperCase();
+    if(heroName.startsWith('X')) {
+        error.style.display = "block"; 
+    } else {
+        error.style.display = "none";
+    }
+}
+
+form.heroName.addEventListener("change", (e) => {
+    console.log("Hero Name is changed");
 });
 
-// WHEN ELEMENT GET OUT OF FOCUS(BLUR EVENT)
-input.addEventListener("blur", () => {
-    console.log("Focus Lost")
-    if(input.value === "") input.value = "Type...";
+form.heroName.addEventListener("keyup", (e) => {
+    validateInLine.call(form.heroName);
 });
 
-// WHEN ELEMENT LOOSES FOCUS AFTER USER HAD MADE CHANGES
-input.addEventListener("change", () => console.log("Change Has Been Made"));
-
-
-// GETTING AND SETTING VALUES OF FORM ELEMENT
-input.value = "Type...";        // SET
-console.log(input.value);       // GET
-// SUBMIT EVENT
-form.addEventListener("submit", (event) => {
-    console.log("Form Submitted");
-    console.log(`You Have Searched For ${input.value}.`);
+function makeHero(event) {
     event.preventDefault();
-});
+    if(form.heroName.value[0].toUpperCase() === 'X') {
+        event.preventDefault();
+        alert("Hero Names starting with a letter 'X' are not allowed");
+    }
+    const hero = {
+        "name": form.heroName.value,
+        "realName": form.realName.value,
+        "powers": [...form.powers].filter(x => x.checked).map(x => x.value),
+        "heroType": form.heroType.value,    
+        "city": [...form.city].filter(x => x.selected).map(x => x.value)
+    };
+    console.log(JSON.stringify(hero));
+    return hero;
+}

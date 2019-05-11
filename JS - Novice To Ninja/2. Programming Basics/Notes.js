@@ -8,7 +8,7 @@ typeof({name: "Chirag"});
 
 let name = "Alexa", number = 1;
 
-// If a variable is declared without let or const, it is considered as global variable athough it may be declared inside a block
+// If a variable is declared without let or const, it is considered as global variable although it may be declared inside a block
 {
      PI = 3.14 // PI is globally acessible
 }
