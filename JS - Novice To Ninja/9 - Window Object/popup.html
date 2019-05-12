@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>POPUP TEST</title>
+    </head>
+    <body>
+        <script>
+            // CREATE A POPUP AND CLOSE IT AFTER 5 SECONDS
+            const newWindow = window.open("http://www.google.com", "Hey Google", "width=500px, heigth=100px, top=100px, left=100px");
+            setTimeout(() => {
+                newWindow.close();
+            }, 5000)
+        </script>
+    </body>
+</html>
