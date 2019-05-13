@@ -184,4 +184,22 @@ past.setTime(0);
 document.cookie = `name=chirag; expires=${past.toUTCString()}`;
 
 
+// TIMING FUNCTIONS
+
+// SETTIMEOUT
+let id = window.setTimeout(() => alert("Time's Up"), 5000);
+
+// CLEARING TIMEOUTS
+window.clearTimeout(id);
+
+// SETINTERVAL
+let id = window.setInterval(() => console.log("REPEAT"), 1000);
+
+// CLEARING INTERVALS
+window.clearInterval(id);
+
+// ANIMATION
+
+// SEE ANIMATION.HTML
+
 
