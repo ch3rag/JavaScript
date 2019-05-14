@@ -118,3 +118,70 @@ myReferenceError.stack;
 //     at Function.Module.runMain (internal/modules/cjs/loader.js:741:12)
 //     at startup (internal/bootstrap/node.js:285:19)
 //     at bootstrapNodeJSCore (internal/bootstrap/node.js:739:3)"
+
+
+// THROWING ERRRORS
+// ANYTHING EXPRESSION CAN BE THROWN TO HALT THE EXECUTION
+// throw 2;
+// throw "Up";
+// throw {name: "No name specified"};
+
+// IT IS BASICALLY USED TO THROW AN ERROR OBJECT WHICH CAN BE LATER CATCHED IN A CATCH BLOCK
+
+// throw new Error("An error occured");
+
+function squareRoot(x) {
+    if (x < 0) {
+        throw new RangeError("Can't find the square root of negative numbers");
+    }
+    return Math.sqrt(x);
+}
+
+// squareRoot(-1); 
+// Will throw a RangeError
+
+// Exception Handling
+// USING TRY, CATCH AND FINALLY
+
+function squareRootModified(x) {
+    try {
+        return squareRoot(x);
+    } catch (rangeError) {
+        return squareRoot(-x) + "i";
+    }
+}
+
+console.log(squareRootModified(-49));       // 7i
+
+// FINALLY WILL EXECUTED NO MATTER WHETHER ERROR OCCURED OR NOT
+
+function squareRootModifiedTwo(x) {
+    let answer;
+    try {
+        answer = squareRoot(x);
+    } catch (rangeError) {
+        answer = squareRoot(-x) + "i";
+    } finally {
+        return `+ or - ${answer}`;
+    }
+}
+
+console.log(squareRootModifiedTwo(49));         // + or - 7
+
+//  SIMPLE TEST CASE
+
+function itSquareRoots4() {
+    return squareRoot(4) === 2;
+}
+
+// TESTING FRAMEWORK
+// JEST
+// CREATED BY FACEBOOK
+
+// INSTALL JEST VIA NPM
+// CREATE A FILE squareRoot.test.js
+
+
+
+
+
