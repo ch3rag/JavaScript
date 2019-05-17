@@ -143,6 +143,7 @@ console.log("Hmm.. Should I take the mission or not...?");
 // STILL THE CALLBACK IS INVOKED AFTER THE CURRENT EXECUTION IS FINISHED.
 
 // PROMISES
+// ELEGANT WAY TO CHAIN ASYNCHRONOUS FUNCTIONS
 /*
     A promise represents the future result of an asynchronous operation. Promises
     don’t do anything that can’t already be achieved using callbacks, but they help
@@ -156,3 +157,101 @@ console.log("Hmm.. Should I take the mission or not...?");
             1. Resolved ― the asynchronous operation was completed successfully.
             2. Rejected ― the asynchronous operation didn’t work as expected, wasn’t successfully completed or resulted in an error.
 */
+
+// CREATING PROMISES
+
+const promise = new Promise((resolve, reject) => {
+    // INITIALIZATION CODE GOES HERE
+    if(success) {
+        resolve(value);
+    } else {
+        reject(error);
+    }
+});
+
+// HIGHER ORDER FUNCITONS
+
+function greet(greeting) {
+    return function() {
+        console.log(greeting);
+    }
+}
+
+const greetEnglish = greet("Hello!");
+const greetHindi = greet("Namaste!");
+
+
+// CLOSURES
+// A closure is formed when the inner function is returned by the outer function,
+// maintaining access to any variables declared inside the enclosing function
+
+function counter() {
+    let i = 0;
+    return function() {
+        console.log("Value Of i is: " + i);
+        i = i + 1;
+    }
+}
+
+let myCounter = counter();
+myCounter();
+// Value Of i is: 0
+myCounter();
+// Value Of i is: 1
+
+
+function getFahrenhieter() {
+    let a = 1.8;
+    let b = 32;
+    return c => c * a + b;
+
+    // OR
+    // return function(c) {
+    //     return c * a + b;
+    // }
+}
+
+const myFahrenhiet = getFahrenhieter();
+myFahrenhiet(40);
+// 104
+
+// GENERATORS
+// ES6 introduced support for generators. These are special functions used to
+// produce iterators that maintain the state of a value.
+// To define a generator function, an asterisk symbol (*) is placed after the function declaration
+
+function * exampleGenerator() {
+    // CODE
+}
+
+// Calling a generator function doesn’t actually run any of the code in the function;
+// it returns a Generator object that can be used to create an iterator that
+// implements a next() method that returns a value every time the next() method
+// is call
+
+// FIBONACCI GENERATOR
+
+function * fib(a, b) {
+    let [prev, current] = [a, b];
+    while(true) {
+        [prev, current] = [current, prev + current];
+        yield current;
+    }
+}
+
+const fibGenerator = fib(1, 1);
+
+fibGenerator.next();
+// 2
+fibGenerator.next();
+// 3
+
+
+for(let val of fibGenerator) {
+    console.log(val);
+    if(val > 100) {
+        break;
+    }
+}
+
+

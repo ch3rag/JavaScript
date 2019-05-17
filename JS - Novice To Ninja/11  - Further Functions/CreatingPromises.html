@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Creating Promises</title>
+    </head>
+
+    <body>
+        <script>
+            const dice = {
+                side: 6,
+                roll: function () {
+                    return (Math.floor(this.side * Math.random() + 1));
+                }
+            }
+
+            // CONSIDER ROLL AS ASYNC OPERATION AND ROLLING 1 AS FAILURE AND OTHERS AS SUCCESS
+
+            const promise =  new Promise((resolve, reject) => {
+                const n = dice.roll();
+                setTimeout(() => {
+                    (n > 1) ? resolve(n) : reject(n);
+                }, n * 1000);
+            });
+
+            promise.then(value => {
+                console.log(`Yes I Rolled ${value}`);
+            })
+            .catch(value => {
+                console.log(`Dart! ... I Rolled A ${value}`);
+            });
+        </script>
+    </body>
+</html>
