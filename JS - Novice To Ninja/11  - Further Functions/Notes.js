@@ -254,4 +254,65 @@ for(let val of fibGenerator) {
     }
 }
 
+// DOUBLE PARANS
 
+function getExp(x) {
+    return function(y) {
+            return Math.pow(x, y);
+    }
+} 
+
+const twoExp = getExp(2);
+twoExp(5);
+// 32
+
+getExp(3)(4)
+// 81
+
+// CURRYING
+// A function is said to be curried when not all arguments have been supplied to the
+// function, so it returns another function that retains the arguments already
+// provided, and expects the remaining arguments that were omitted when the
+// original function was called. A final result is only returned once all the expected
+// arguments have eventually been provided.
+
+function multiplier(x, y) {
+    if(y === undefined) {
+        return function(z) {
+            return x * z;
+        }
+    } else {
+        return x * y;
+    }
+}
+
+multiplier(5, 7);
+// 35
+
+const doubler = multiplier(2);
+doubler(4);
+// 8
+
+// GENERIC CURRY FUNCTION
+
+function curry(func, ...oldArgs) {
+    return function(...newArgs) {
+        const allArgs = [...oldArgs, ...newArgs];
+        return func(... allArgs);
+    }
+}
+
+// CURRYING MULTIPLIER
+const multiplier = (x, y) => x * y;
+
+const doubler = curry(multiplier, 2);
+
+doubler(37);
+// 74
+
+const divider = (x, y) => x / y;
+
+const  reprocal = curry(divider, 1);
+
+reprocal(3);
+// 0.33333333333333333
