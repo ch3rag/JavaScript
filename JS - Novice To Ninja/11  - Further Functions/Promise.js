@@ -31,5 +31,4 @@ fetch(dataMuseAPI)
     })
 
 
-    // USING ASYNC/AWAIT
     
