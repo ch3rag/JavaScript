@@ -9,9 +9,11 @@ myObj = new Object({
     age: 20
 });
 
-myObject = new Object(prototype, {
+myObject = Object.create(prototype);
+
+myObject = Object.create(prototype, {
     // PROPERTIES TO BE ADDED USING DESCRIPTORS
-    name : {
+    name: {
         value: "Chirag",
         enumerable: true,
         writable: false,
@@ -143,7 +145,7 @@ Dice.prototype.faces = this.sides;
 
 // PROTOTYPE FIELDS ARE NOT COMMON
 function Person(name) {
-	this.name = name;
+    this.name = name;
 }
 
 Person.prototype.lastName = "";
@@ -325,16 +327,16 @@ console.log(Random.getRandom(10));
 
 // ES6 GETTERS SETTERS
 class Dice {
-	constructor() {
-    	this._sides;
-     }
-    
+    constructor() {
+        this._sides;
+    }
+
     get sides() {
         return this._sides;
     }
 
     set sides(x) {
-        if(x < 1)  {
+        if (x < 1) {
             throw new Error("SIDES CAN'T BE NEGATIVE");
         } else {
             this._sides = x;
@@ -372,11 +374,11 @@ class Dice {
 // MONKEY-PATCHING
 // METHOD OF ADDING NEW FEATURES TO EXSISTING CLASSES
 
-Number.prototype.isEven = function() {
-	return this % 2 === 0;
+Number.prototype.isEven = function () {
+    return this % 2 === 0;
 }
-Number.prototype.isOdd = function() {
-	return this % 2 === 1;
+Number.prototype.isOdd = function () {
+    return this % 2 === 1;
 }
 // DON'T USE ANONYMOUS FUNCTIONS
 // Number.prototype.isEven = () =>  this % 2 === 0;
@@ -430,10 +432,10 @@ console.log(me);
 
 Object.defineProperty(me, "yearOfBirth", {
     set(x) {
-        if(x < 0) {
-        	throw new Error();
+        if (x < 0) {
+            throw new Error();
         } else {
-        	this.age = new Date().getFullYear() - x;
+            this.age = new Date().getFullYear() - x;
         }
     },
     get() {
@@ -451,8 +453,8 @@ me.yearOfBirth = -1;
 // A mixin is a way of adding properties and methods of some objects to another
 // object without using inheritance.
 
-const a = {name: "Chirag"};
-const b = {age: 20};
+const a = { name: "Chirag" };
+const b = { age: 20 };
 
 Object.assign(a, b);
 a;
@@ -463,18 +465,163 @@ a;
 
 // WE DEFINE OUR OWN FUNCTION FOR THE DEEP COPIES
 
-function mixin(targetObject, ...restObjects) {  
-    for(const object of restObjects) {
-        if(typeof object === "object") {                // ONLY OBJECT ALLOWED
-            for(const key of Object.keys(object)) {      // GO THROUGH EACH KEY
-                if(typeof object[key] === "object") {   // IF KEY IS ASSINGNED TO AN OBJECT
+function mixin(targetObject, ...restObjects) {
+    for (const object of restObjects) {
+        if (typeof object === "object") {                // ONLY OBJECT ALLOWED
+            for (const key of Object.keys(object)) {      // GO THROUGH EACH KEY
+                if (typeof object[key] === "object") {   // IF KEY IS ASSINGNED TO AN OBJECT
                     // FIND IF THAT OBJECT IS ARRAY OR OBJECT AND
-                    targetObject[key] = Array.isArray(object[key])? [] : {};
+                    targetObject[key] = Array.isArray(object[key]) ? [] : {};
                     mixin(targetObject[key], object[key]);
                 } else {
                     Object.assign(targetObject, object);
                 }
             }
-        } 
+        }
     }
 }
+
+// MIXING OBJECTS VIA MIXIN
+
+const wonderWoman = {};
+mixin(wonderWoman, {
+    realName: "Diana Prince",
+    name: "Wonder Woman"
+});
+
+wonderWoman;
+// {realName: "Diana Prince", name: "Wonder Woman"}
+
+// DEEP COPIES OF OBJECTS USING MIXIN
+
+function copy(target) {
+    const retObj = Object.create(Object.getPrototypeOf(target));
+    mixin(retObj, target);
+    return retObj;
+}
+
+
+// FACTORY FUNCTION
+// USED TO CREATE OBJECTS
+
+SuperHuman = {
+    name: "",
+    realName: "",
+    change: function () {
+        return `${this.realName} goes into a phone box and comes out as ${this.name}!`;
+    }
+};
+
+// FACTORY FUNCTION
+
+function createSuperHuman(properties) {
+    const obj = copy(SuperHuman);
+    mixin(obj, properties);
+    return obj;
+}
+
+const hulk = createSuperHuman({ name: "Hulk", realName: "Bruce Banner" });
+hulk.change();
+// Bruce Banner goes into a phone box and comes out as Hulk!
+
+
+// One way to think about the difference between prototypal inheritance and
+// inheritance from mixin objects is to consider whether an object is something or
+// whether it has something. For example, a tank is a vehicle, so it might inherit
+// from a Vehicle prototype. The tank also has a gun, so this functionality could be
+// added using a gun mixin object.
+
+// ADDING CUSTOM SUPERPOWER TO OUR HEROS USING MIXIN
+
+const flight = {
+    fly() {
+        console.log(`Up, up and away! ${this.name} soars through the air!`);
+        return this;
+    }
+}
+const superSpeed = {
+    move() {
+        console.log(`${this.name} can move faster than a speeding bullet!`);
+        return this;
+    }
+}
+const xRayVision = {
+    xray() {
+        console.log(`${this.name} can see right through you!`);
+        return this;
+    }
+}
+
+const superman = createSuperHuman({
+    name: "Superman",
+    realName: "Clark Kent"
+});
+mixin(superman, flight, superSpeed, xRayVision);
+
+// OR
+// const superman = createSuperHuman({
+//     name: "Superman",
+//     realName: "Clark Kent"
+// }, flight, superSpeed, xRayVision);
+
+superman.fly();
+// Up, up and away! Superman soars through the air!
+superman.move();
+// Superman can move faster than a speeding bullet!
+superman.xray();
+// Superman can see right through you!
+
+// BORROWING METHODS FROM PROTOTYPES
+
+// It’s possible to borrow methods from objects without having to inherit all their
+// properties and methods. 
+
+// EXAMPLE: Borrowing Array Methods
+// SOME ARRAY LIKE OBJECTS HAVE MISSING SLICE METHOD
+// WE CAN BORROW IT FROM ARRAY PROTOTYPE
+const slice = Array.prototype.slice;
+
+let arrayLikeObject = ["A", "B", 1, 7, "HELLO"];
+
+// WE CAN CALL IT USING OUR BORROWED METHOD
+
+slice.call(arrayLikeObject, 1, 3);
+// ["B", 1]
+
+// WE CAN ALSO USE WITHOUT BORROWING IT FIRST
+
+[].slice.call(arrayLikeObject, 1, 3);
+
+// AN ARRAY LIKE OBJECT CAN BE CONVERTED INTO BY CALLING SLICING WITH NO ARGS
+
+const array = slice.call(arrayLikeObject);
+
+// ES6 PROVIES AN Array.from(args) TO DO SO
+
+const array = Array.from(arrayLikeObject);
+
+// ALSO WE CAN USE SPREAD OPERATOR
+
+const array = [...arrayLikeObject];
+
+
+// PROBLEM WITH INHERITANCE
+
+// The “Gorilla Banana” problem occurs when you need a method from an object, so
+// you inherit from that object. The name comes from a quote by Joe Armstrong, the
+// creator of the Erlang programming language:
+// You wanted a banana but what you got was a gorilla holding the banana
+// and the entire jungle.
+
+// If you do decide to use classes, it’s recommended to make them “skinny” ―
+// meaning they don’t have too many properties and methods. Another good
+// practice when creating classes is to keep inheritance chains short. If you have
+// long lines of inheritance, the objects at the end of these chains will usually end
+// up being bloated with properties and methods they don’t need.
+
+// If you want to use a particular method from a class, but it has lots of properties
+// and methods you don’t need, then it would be preferable to just borrow the
+// method instead. So, borrow the banana method from the Gorilla class instead of 
+// inheriting the whole Gorilla! => banana = Gorilla.prototype.banana;
+
+// **** THE END ****
