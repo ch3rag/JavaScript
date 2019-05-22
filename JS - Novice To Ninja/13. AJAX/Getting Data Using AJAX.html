@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>AJAX EXAMPLES</title>
+    </head>
+    <body>
+        <button id="number">Number Fact</button>
+        <button id="chuck">Chuck Norris Fact</button>
+        <div id="output">
+            AJAX response will appear here.
+        </div>
+        <script>
+            const textButton = document.querySelector("#number");
+            const apiButton = document.querySelector("#chuck");
+            const outputDiv = document.querySelector("#output");
+
+            const textURL ="http://numbersapi.com/random";
+            const apiURL = "https://api.chucknorris.io/jokes/random";
+
+
+            textButton.addEventListener("click", (e) => {
+                fetch(textURL)
+                .then(response => {
+                    outputDiv.innerHTML = "Waiting for response...";
+                    if(response.ok) {
+                        return response;
+                    } else {
+                        throw new Error(response.status + "\n" + response.statusText);
+                    }
+                })
+                .then(response => response.text())
+                .then(text => outputDiv.textContent = text)
+                .catch(error => console.log("There was an error: " + error))  
+            }, false);
+
+            apiButton.addEventListener("click", (e) => {
+                fetch(apiURL)
+                .then(response => {
+                    outputDiv.innerHTML = "Waiting for response...";
+                    if(response.ok) {
+                        return response;
+                    } else {
+                        throw new Error(response.status + "\n" + response.statusText);
+                    }
+                })
+                .then(response => response.json())
+                .then(jsonData => outputDiv.textContent = jsonData.value)
+                .catch(error => console.log("There was an error: " + error))
+            }, false);
+        </script>
+    </body>
+</html>
