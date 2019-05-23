@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>HTML 5 API DEMO</title>
+</head>
+
+<body>
+    <!-- DATA ARRTIBUTE -->
+    <div id="hero" data-power="flight superSpeed" data-max-flight-speed="100"></div>
+
+    <script>
+        const hero = document.querySelector("#hero");
+        console.log(hero.dataset.power);
+        console.log(hero.dataset.maxFlightSpeed);
+
+        // SAVING DATA TO LOCAL STORAGE
+        localStorage.setItem("time", new Date().toDateString())
+
+        // GETTING DATA FROM THE LOCAL STORAGE
+        const data = localStorage.getItem("time");
+
+        console.log(data);
+
+        window.addEventListener("storage", (e) => {
+            console.log(`Storage Event: ${e.key} has been changed from ${e.oldValue} to ${e.newValue} and stored in ${e.storageArea}`);
+        });
+        // IT WILL NOT WORK LOCALLY AND REQUIRES TO BE RUNNING ON SERVER
+
+</script>
+</body>
+
+</html>

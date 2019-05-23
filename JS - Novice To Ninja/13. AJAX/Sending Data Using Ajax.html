@@ -5,14 +5,45 @@
         <title>AJAX EXAMPLE</title>
     </head>
     <body>
-        <form id="todo">
+        <form name="todo">
 
             <input type="text" name="task" placeholder="Add Task" autofocus required>
-            <button type="submit">Add Task</button>
-            <script>
-                // ADD FORM ACTION AND METHOD USING JS
-                // READ PREVIOUS PAGE FOR TYPEHOLDER API
-            </script>
+            <button type="submit">Add Task</button>            
         </form>
+        <script>
+            // DEFINE API URL
+            const apiURL = "https://jsonplaceholder.typicode.com/todos/";
+            // GET THE FORM
+            const form = document.forms.todo;
+            // ATTACH EVENT LISTENER ON SUBMIT
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                // DEFINE THE TASK
+                const task = {
+                    userId: 1,
+                    title: form.task.value,
+                    completed: false
+                };
+
+                // GET THE TASK DATA IN THE JSON FORMAT
+                const data = JSON.stringify(task);
+
+                const headers = new Headers({
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                });
+                const request = new Request(apiURL, {
+                    method: "POST",
+                    headers: headers,
+                    body: data
+                });
+
+                fetch(request)
+                .then(response => response.json())
+                .then(task => console.log(`Task Saved With An Id Of: ${task.id}`))
+                .catch(error => console.log("There was an error", error));
+            });
+        </script>
     </body>
 </html>

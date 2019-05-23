@@ -226,3 +226,15 @@ const request = new Request(url, {
     cache: "no-cache"
 });
 
+
+// FormData Interface
+// The Fetch API includes the FormData interface, which makes it much easier to
+// submit information in forms using Ajax.
+
+const data = new FormData(form);
+// If a form is passed to this constructor function as an argument, the form data
+// instance will serialize all the data automatically, ready to be sent using Ajax.
+
+// ADDING ADDITIONAL DATA TO FormData OBJECT
+
+data.append("Name", "Chirag");

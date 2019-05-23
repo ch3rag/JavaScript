@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>WEB WORKER DEMO</title>        
+    </head>
+    <body>
+        <p>Web Worker Counter Example</p>
+        Counter: <span id="count"></span>
+        <script>
+            let myWorker;
+            // FIRST USE POLLYFILL TO CHECK BROWSER SUPPORT
+            if (typeof(Worker) != undefined) {
+                // CHECK IF THE WORKER ALREADY EXISTS
+                if(typeof(myWorker) != undefined) {
+                    // CREATE WORKER
+                    try {
+                        myWorker = new Worker("./worker.js");
+                    } catch(err) {
+                        console.log("Error While Creating Worker." + err);
+                    }
+                }
+
+                // ONCE IT IS CREATED ATTACH A EVENT LISTENER ONMESSAGE EVENT
+                myWorker.addEventListener("message", (e) => {
+                    document.querySelector("#count").textContent = e.data;
+                });
+            } else {
+                console.log("Browser Not Supported.");
+            }
+        
+        </script>
+    </body>
+</html>
