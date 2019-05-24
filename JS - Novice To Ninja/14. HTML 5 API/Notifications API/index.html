@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Notification API Demo</title>
+    </head>
+    <body>
+        <button id="ask">Ask For Permission</button>
+        <script>
+            const ask = document.querySelector("#ask");
+            ask.addEventListener("click", () => {
+                if(Notification) {
+                    Notification.requestPermission()
+                    .then(permission => {
+                        // TYPES OF PERMISSIONS (Notication.permission)
+                        // granted
+                        // default (NOT ASKED THE USER YET)
+                        // denied
+                        if(permission == "granted") {
+                            // IF GRANTED
+                            const notif = new Notification("Hello", {
+                                body: "Welcome To Danger!",
+                            })
+
+                            // CLOSE IT AFTER 1 SECOND
+                            setTimeout(() => notif.close(), 1000);
+                        }
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

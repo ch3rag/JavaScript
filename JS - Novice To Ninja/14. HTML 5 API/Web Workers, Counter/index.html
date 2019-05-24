@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>WEB WORKER DEMO</title>        
+    </head>
+    <body>
+        <button id="start">Start Worker</button>
+        <button id="stop">Stop Worker</button>
+        <p>Web Worker Counter Example</p>
+        Counter: <span id="count"></span>
+        <script>
+            let myWorker;
+            // FIRST USE POLLYFILL TO CHECK BROWSER SUPPORT
+            const startButton = document.querySelector("#start");
+            startButton.addEventListener("click", (e) => {
+                if (typeof(Worker) !== "undefined") {
+                    // CHECK IF THE WORKER ALREADY EXISTS
+                    if(typeof(myWorker) == "undefined") {
+                        // CREATE WORKER
+                        try {
+                            myWorker = new Worker("./worker.js");
+                            // ONCE IT IS CREATED ATTACH A EVENT LISTENER ONMESSAGE EVENT
+                            myWorker.addEventListener("message", (e) => {
+                                document.querySelector("#count").textContent = e.data;
+                            });
+                        } catch(err) {
+                            console.log("Error While Creating Worker." + err);
+                        }
+                    } else {
+                        console.log("Worker Already Running!");
+                    }
+                } else {
+                    console.log("Browser Not Supported.");
+                }
+            });
+
+            const stopButton = document.querySelector("#stop");
+            stopButton.addEventListener("click", (e) => {
+                if(typeof(myWorker) !== "undefined") {
+                    // STOP IT
+                    myWorker.terminate();
+                    myWorker = undefined;
+                } else {
+                    console.log("Worker Is Not Running");
+                }
+            })
+                
+        </script>
+    </body>
+</html>

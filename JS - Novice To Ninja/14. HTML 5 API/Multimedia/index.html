@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Mutimedia DEMO</title>
+    </head>
+    <body>
+        <audio src="assets/music.mp3" controls>
+            <!-- THIS TEXT IS DISPLAYED IF BROWSER DOESN'T SUPPORT IT -->
+            Audio Not Supported
+        </audio>
+        <button id="play">Play</button>
+        <button id="pause">Pause</button>
+        <button id="mute">Mute</button>
+        Volume
+        <input id="vol" type="range" min="0" max="10" step="1" value="5">
+        <script>
+            const player = document.querySelector("audio");
+            console.log(player);
+            document.querySelector("#play").addEventListener("click", (e) => {
+                player.play();
+            });
+
+            document.querySelector("#pause").addEventListener("click", (e) => {
+                player.pause();
+            });
+
+            document.querySelector("#mute").addEventListener("click", (e) => {
+                player.muted = true;
+            });
+
+            document.querySelector("#vol").addEventListener("change", () => {
+                player.volume = parseInt(document.querySelector("#vol").value)/10;
+            });
+
+            // OTHER PROPERTIES
+            // JUMP 
+            // player.currentTime += value
+            // PLAYBACK RATE 
+            // player.playbackRate += value
+            // LOOP
+            // player.loop = true;
+            // GET DURATION
+            // player.duration;
+
+            // THESE PROPERTIES ARE AVAILABLE ONLY WHEN THE META DATA IS RECEIVED
+            // UPON RECEIVING DATA lodedmetadata EVENT IS FIRED
+
+            player.addEventListener("loadedmetadata", () => {
+                console.log(player.duration);
+            }); 
+
+            // OTHER EVENTS INCLUDE
+            // play
+            // pause
+            // volumechange
+
+
+        </script>
+    </body>
+</html>
