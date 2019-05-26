@@ -1,0 +1,20 @@
+{
+  "name": "WebPack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"build": "webpack"
+  },
+  "keywords": [],
+  "author": "Chirag Singh Rajput",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
+  }
+}
