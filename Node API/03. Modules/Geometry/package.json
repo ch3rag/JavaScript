@@ -1,0 +1,4 @@
+{
+    "name": "geometry",
+    "main": "./lib/main.js"
+}
