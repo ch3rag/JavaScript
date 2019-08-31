@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8' />
+        <title>SVG</title>
+        <script src="https://d3js.org/d3.v2.min.js"></script>
+    </head>
+    <body>
+        <script>
+            const container = d3
+                            .select("body")
+                            .append("svg")
+                            .attr("height", 100)
+                            .attr("width", 400)
+            const xAxisScale = d3.scale.linear()
+                                .domain([0, 100])
+                                .range([0, 400]);
+            const xAxis = d3.svg.axis()
+                            .scale(xAxisScale);
+
+            const xAxisGroup = container
+                                .append("g")
+                                .call(xAxis);
+
+            console.log(typeof(xAxis));                            
+        </script>
+    </body>
+</html>

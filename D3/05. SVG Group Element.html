@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8' />
+        <title>SVG</title>
+        <script src="https://d3js.org/d3.v2.min.js"></script>
+    </head>
+    <body>
+        <script>
+            function Circle(x, y, r, fill) { this.x = x; this.y = y; this.radius = r; this.fill = fill; }
+            function Rectangle(x, y, width, height, fill) {
+                this.x = x; this.y = y; this.height = height; this.width = width; this.fill = fill;
+            }
+
+            const circleData = [
+                new Circle(20, 20, 20, "green"),
+                new Circle(70, 70, 20, "purple")
+            ];
+
+            const rectangleData = [
+                new Rectangle(110, 110, 30, 30, "blue"),
+                new Rectangle(160, 160, 30, 30, "red")
+            ];
+
+            const container = d3.select("body").append("svg").attr("width", 200).attr("height", 200);
+            const circleGroup = container
+                                .append("g");
+
+            const circles = circleGroup
+                                .selectAll("circle")
+                                .data(circleData)
+                                .enter()
+                                .append("circle");
+
+            const circleAttr = circles
+                                .attr("cx", data => data.x)
+                                .attr("cy", data => data.y)
+                                .attr("r", data => data.radius)
+                                .style("fill", data => data.fill);
+
+            const rectangleGroup = container
+                                    .append("g");
+            
+            const rectangles = rectangleGroup
+                                .selectAll("rect")
+                                .data(rectangleData)
+                                .enter()
+                                .append("rect");
+
+            const rectangleAttr = rectangles
+                                    .attr("x", data => data.x)
+                                    .attr("y", data => data.y)
+                                    .attr("height", data => data.height)
+                                    .attr("width", data => data.width)
+                                    .attr("fill", data => data.fill);
+
+            circleGroup.attr("transform", "translate(80, 0) ");
+
+        </script>
+    </body>
+</html>

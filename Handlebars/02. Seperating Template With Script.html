@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+        <meta charset='utf-8' />
+        <title>Hello Handlebars</title>
+        <script src="./lib/handlebars-v4.1.2.js"></script>
+    </head>
+    <body>
+        <div id="myData"></div>
+
+        <script id="myTemplate" type="text/x-handlebars-template">
+            <h3>Favorite {{name}}</h3>
+            <ol>
+                {{#each arr}}
+                <li>{{item}}</li>
+                {{/each}}
+            </ol>
+            {{{end}}}
+        </script>
+        <script>
+            
+            const template = Handlebars.compile(document.getElementById("myTemplate").innerHTML);
+
+            let formattedData = template({
+                name: "Games",
+                arr: [
+                    {item: "Grand Theft Auto"},
+                    {item: "Bioshock"},
+                    {item: "Red Dead Redemption"},
+                    {item: "Half Life"},
+                    {item: "Doom"},
+                ],
+                end: "<i>This goes italic</i>"
+            });
+            document.getElementById("myData").innerHTML += formattedData;
+        </script>
+    </body>
+</html>

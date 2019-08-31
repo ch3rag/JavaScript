@@ -1,0 +1,49 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <title>D3 Demo</title>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+    </head>
+    <body>
+    </body>
+    <script>
+        const circle = d3.select("body")
+                    .append("svg")
+                    .attr("width", 50)
+                    .attr("height", 50)
+                    .append("circle")
+                    .attr("cx", 25)
+                    .attr("cy", 25)
+                    .attr("r", 25)
+                    .style("fill", "red");
+
+        let data = ["Chirag", "Singh", "Rajput"];
+        const para = d3.select("body")
+                    .selectAll("p")
+                    .data(data)
+                    .enter()
+                    .append("p")
+                    .text((data, i) => `${data}  is at index ${i}`);
+
+        let circleData = [
+            {fill:"Red", radius: 50},
+            {fill:"Green", radius: 25},
+            {fill:"Blue", radius: 15},
+        ];
+
+        const container = d3.select("body")
+                        .append("svg")
+                        .attr("height", 600)
+                        .attr("width", 600);
+        const circles = container.selectAll("circle")
+                        .data(circleData)
+                        .enter()
+                        .append("circle")
+                        .attr("cx", 50)
+                        .attr("cy", 50)
+                        .attr("r", data => data.radius)
+                        .style("fill", data => data.fill);
+
+                        
+    </script>
+</html>

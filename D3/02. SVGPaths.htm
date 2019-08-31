@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8' />
+        <title>SVG Paths</title>
+        <script src="https://d3js.org/d3.v2.min.js"></script>
+    </head>
+    <body>
+        <svg width="200" height="200">
+            <polygon stroke="blue" fill="yellow" stroke-weight="2"
+                points= "5,100 50,5 100,100"></polygon>
+        </svg>
+        <br />
+        <svg width="200" height="200" >
+            <path stroke="red" fill="none" stroke-weight="5" 
+            d= "M 0 0 L 100 100 M 100 0 L 0 0 L 0 100 L 50 50 L 50 100 Z"></path>
+        </svg>
+        <br />
+        <script>
+            function Point(x, y) { this.x = x; this. y = y; }
+            const points = [
+                new Point(1, 5),
+                new Point(20, 20),
+                new Point(40, 10),
+                new Point(60, 40),
+                new Point(80, 5),
+                new Point(100, 60)
+            ];
+
+            const container = d3.select("body")
+                            .append("svg")
+                            .attr("height", 200)
+                            .attr("width", 200);
+
+            // GENERATORS => 
+            // d3.svg.line - create a new line generator
+            // d3.svg.line.radial - create a new radial line generator
+            // d3.svg.area - create a new area generator
+            // d3.svg.area.radial - create a new radial area generator
+            // d3.svg.arc - create a new arc generator
+            // d3.svg.symbol - create a new symbol generator
+            // d3.svg.chord - create a new chord generator
+            // d3.svg.diagonal - create a new diagonal generator
+            // d3.svg.diagonal.radial - create a new radial diagonal generator
+            
+            const lineFunction = d3.svg.line()
+                                .x(data => data.x)
+                                .y(data => data.y)
+                                .interpolate("monotone");
+            // linear, step-before, step-after, basis, basis-open, basis-closed, bundle, cardinal, cardinal-open, cardinal-closed, monotone
+
+            const lineGraph = container.append("path")
+                                .attr("d", lineFunction(points))
+                                .attr("stroke", "blue")
+                                .attr("stroke-width", 2)
+                                .attr("fill", "none")
+        </script>
+    </body>
+</html>

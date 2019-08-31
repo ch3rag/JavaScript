@@ -17,6 +17,16 @@ app.set("view engine", "handlebars")
 app.use(express.static(__dirname + "/public"));
 
 
+// defining a test middleware
+// when using a view engine with Express, you can set intermediate data on res.locals in your middleware, and that data will 
+// be available in your view
+const testWare = (req, res, next) => {
+    res.locals.showTests = app.get("env") != "production" && req.query.test === "1";
+    next();
+};
+
+app.use(testWare);
+
 app.get("/", (req, res) => {
     res.render("home")
 })

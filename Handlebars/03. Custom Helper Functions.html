@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+        <meta charset='utf-8' />
+        <title>Hello Handlebars</title>
+        <script src="./lib/handlebars-v4.1.2.js"></script>
+    </head>
+    <body>
+        <div id="myData"></div>
+
+        <script id="myTemplate" type="text/x-handlebars-template">
+            {{makeLink "Google" "http://www.google.co.in"}}
+            <br />
+            {{makeLink "My Github" "http://www.github.com/iambharatsingh"}}
+        </script>
+        <script>
+            Handlebars.registerHelper("makeLink", (text, url) => {
+                // escape strings to remove html tags (prevent injections)
+                text = Handlebars.Utils.escapeExpression(text);
+                url = Handlebars.Utils.escapeExpression(url);
+                let link = `<a href=${url}>${text}</a>`;
+
+                // using Handlebars.SafeString instance prevents the html to be escaped (no more {{{}}}!!)
+                return new Handlebars.SafeString(link);
+            });
+            
+            let formattedData = Handlebars.compile(document.getElementById("myTemplate").innerHTML)();
+            document.getElementById("myData").innerHTML += formattedData;
+        </script>
+    </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8' />
+        <title>SVG</title>
+        <script src="https://d3js.org/d3.v2.min.js"></script>
+    </head>
+    <body>
+        <script>
+            let maxX = 0, maxY = 0;
+            function Rectangle(x, y, width, height, fill) {
+                this.x = x; this.y = y; this.height = height; this.width = width; this.fill = fill;
+                if(x > maxX) maxX = x;
+                if(y > maxY) maxY = y;
+            }
+
+            const rectangles = [
+                new Rectangle(10, 10, 20, 20, "Green"),
+                new Rectangle(120, 40, 20, 20, "Purple"),
+                new Rectangle(70, 70, 20, 20, "Red")
+            ];
+
+            const container = d3.select("body").append("svg").attr("width", maxX + 20).attr("height", maxY + 20);
+            const rects = container.selectAll("rect").data(rectangles).enter().append("rect")
+                        .attr("x", data => data.x)
+                        .attr("y", data => data.y)
+                        .attr("height", data => data.height)
+                        .attr("width", data => data.width)  
+                        .style("fill", data => data.fill);
+            
+        </script>
+    </body>
+</html>

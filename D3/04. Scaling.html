@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8' />
+        <title>SVG</title>
+        <script src="https://d3js.org/d3.v2.min.js"></script>
+    </head>
+    <body>
+        <script>
+            // Rectangle with very large height
+            function Rectangle(x, y, width, height, fill) {
+                this.x = x; this.y = y; this.height = height; this.width = width; this.fill = fill;
+            }
+
+            const rectangles = [
+                new Rectangle(10, 0, 20, 1000, "red"),
+                new Rectangle(40, 0, 20, 2500, "blue"),
+                new Rectangle(70, 0, 20, 7700, "yellow"),
+                new Rectangle(110, 0, 20, 8700, "brown"),
+                new Rectangle(150, 0, 20, 700, "cyan"),
+                new Rectangle(180, 0, 20, 1200, "cyan")
+            ];
+
+            const container = d3.select("body").append("svg")
+                                .attr("height", 200)
+                                .attr("width", 200);
+
+            const mapper = d3.scale.linear().domain([0, 10000]).range([0, 200]);
+            
+            container.selectAll("rect").data(rectangles).enter().append("rect")
+            .attr("x", data => data.x)
+            .attr("y", data => data.y)
+            .attr("width", data => data.width)
+            .attr("height", data => mapper(data.height))
+            .style("fill", data => data.fill)
+        </script>
+    </body>
+</html>

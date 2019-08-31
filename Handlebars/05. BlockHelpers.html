@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset='utf-8' />
+        <title>Block Helpers</title>
+        <script src="./lib/handlebars-v4.1.2.js"></script>
+    </head>
+    <body>
+        <div id="myData">
+            <!--Information Will Be Displayed Here-->
+        </div>
+
+        <script id="template" type="text/x-handlebars-template">
+            <!--Template Goes Here-->
+            {{#makeRadio "size"}}
+                Small
+                Medium
+                Large
+            {{/makeRadio}}
+        </script>
+
+        <script>
+
+
+            // Script Goes Here
+            const rawTemplate = document.querySelector("#template").innerHTML;
+            
+            Handlebars.registerHelper("makeRadio", (name, options) => {
+                let innerData = options.fn();
+                
+                innerData = innerData.trim().split("\n").map(x => x.trim());
+                let output = "";
+                innerData.forEach(x => {
+                    output += `<input type="radio" name="${name}" value="${x}">${x}<br />`;
+                });
+                return output;
+            });
+
+            const template = Handlebars.compile(rawTemplate);
+
+            document.querySelector("#myData").innerHTML = template();
+        </script>
+    </body>
+</html>

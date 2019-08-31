@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+        <meta charset='utf-8' />
+        <title>Attributes</title>
+        <script src="./lib/handlebars-v4.1.2.js"></script>
+    </head>
+    <body>
+        <div id="myData"></div>
+        <script id="template" type="text/x-handlebars-template">
+            {{sayHello}} <br/>
+            {{colorText "Make This Red" color="Red"}} <br/>
+            {{colorText "Make This Yellow" color="Yellow"}} <br/>
+            {{colorText "Make This Blue" color="Blue"}} <br/>
+            
+            <ol>
+                {{#each games}}
+                <li>{{game}}</li>
+                {{/each}}
+            </ol>
+
+            {{sayHello}}
+            
+        </script>
+
+        <script>
+            Handlebars.registerHelper("colorText", function(data, options) {
+                data = Handlebars.Utils.escapeExpression(data);
+                return new Handlebars.SafeString(`<span style="color:${options.hash.color}">${data}</span>`);
+            });
+
+            Handlebars.registerHelper("sayHello", (options) => {
+                switch(options.data.lang) {
+                    case "English":
+                        return "Hello!"
+                    case "French":
+                        return "Bonjour!"
+                    case "Hindi":
+                        return "Namaste!"
+                    default:
+                        return "Hello!"
+                }
+            });
+            
+            const rawTemplate = document.querySelector("#template").innerHTML;
+            const template = Handlebars.compile(rawTemplate);
+            document.querySelector("#myData").innerHTML += template({
+                games: [
+                    {game: "Grand Theft Auto"},
+                    {game: "Watch Dogs"},
+                    {game: "Half Life"},
+                    {game: "Doom"}
+                ]
+            }, {        // this data will be available to all helpers
+                data: {
+                    lang: "Hindi"
+                }
+            });
+        </script>
+    </body>
+</html>
