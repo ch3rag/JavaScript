@@ -1,8 +1,8 @@
 
 const canvas = document.createElement("canvas");
 const context = canvas.getContext("2d");
-canvas.width = 400;
-canvas.height = 400;
+canvas.width = 1920;
+canvas.height = 1080;
 
 const HEIGHT_HALF = canvas.height / 2;
 const colorA =  "#43C6AC";

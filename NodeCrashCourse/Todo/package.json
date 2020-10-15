@@ -1,0 +1,14 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "Simple Todo App",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Chirag Singh Rajput",
+  "license": "ISC",
+  "dependencies": {
+    "uuid": "^8.3.0"
+  }
+}
